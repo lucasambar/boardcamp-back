@@ -1,9 +1,10 @@
-import express from 'express';
+import express, { json } from 'express';
 import cors from 'cors';
 import categoriesRouter from "./routes/categories.route.js"
 
 const app = express();
 app.use(cors());
+app.use(json())
 
 app.use(categoriesRouter)
 
