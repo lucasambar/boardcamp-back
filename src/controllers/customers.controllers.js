@@ -38,3 +38,17 @@ export async function postCustomer (req, res) {
         res.sendStatus(500)
     }
 }
+
+export async function putCustomer (req, res) {
+    const {name, phone, cpf, birthday} = req.customer
+    const id = req.id
+
+    try {
+        await connection.query("UPDATE customers SET name=$1, phone=$2, cpf=$3, birthday=$4 WHERE id=$5",
+        [name, phone, cpf, birthday, id])
+        res.sendStatus(200)
+    } catch (erro) {
+        console.log(erro)
+        res.sendStatus(500)
+    }
+}
