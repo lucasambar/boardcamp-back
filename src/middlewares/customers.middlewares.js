@@ -14,10 +14,9 @@ export async function customersValidation (req, res, next) {
 
     try {
         const existance = await connection.query("SELECT * FROM customers WHERE cpf = $1", [customer.cpf])
-        console.log(existance)
         if (existance.rowCount !== 0) {
             if (!id) {
-                res.status(209).send("Cliente já cadastrado.")
+                res.status(409).send("Cliente já cadastrado.")
                 return 
             }
         }
