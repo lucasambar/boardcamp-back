@@ -12,3 +12,13 @@ export async function postGame (req, res) {
         res.sendStatus(500)
     }
 }
+
+export async function getGames (req, res) {
+    try {
+        const games = await connection.query('SELECT games.*, categories.name AS "categoryName" FROM games JOIN categories ON games."categoryId"=categories.id')
+        res.send(games.rows)
+    } catch (erro) {
+        console.log(erro)
+        res.sendStatus(500)
+    }
+}
