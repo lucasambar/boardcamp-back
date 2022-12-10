@@ -1,3 +1,4 @@
+import dayjs from "dayjs"
 import { connection } from "../databases/database.js"
 
 export async function getCustomers (req, res) {
@@ -29,6 +30,7 @@ export async function getCustomers (req, res) {
 
 export async function postCustomer (req, res) {
     const {name, phone, cpf, birthday} = req.customer
+    birthday = dayjs(birthday).format("YYYY-MM-DD")
 
     try {
         await connection.query("INSERT INTO customers (name, phone, cpf, birthday) VALUES ($1, $2, $3, $4)", [name, phone, cpf, birthday])
@@ -42,7 +44,8 @@ export async function postCustomer (req, res) {
 export async function putCustomer (req, res) {
     const {name, phone, cpf, birthday} = req.customer
     const id = req.id
-
+    birthday = dayjs(birthday).format("YYYY-MM-DD")
+    
     try {
         await connection.query("UPDATE customers SET name=$1, phone=$2, cpf=$3, birthday=$4 WHERE id=$5",
         [name, phone, cpf, birthday, id])
