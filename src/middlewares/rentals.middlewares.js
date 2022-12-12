@@ -68,6 +68,7 @@ export async function returnRent (req, res, next) {
         }
 
         req.rent = rent
+        console.log(rent, id)
         req.id = id
         next()
     } catch (erro) {
