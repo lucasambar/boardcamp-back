@@ -19,7 +19,7 @@ export async function postNewRent (req, res) {
 export async function postReturnRent (req, res) {
     const {returnDate, delayFee} = req.rent
     const {id} = req.id
-    console.log(req.rent, req.id)
+
     try {
         const a = await connection.query('UPDATE rentals SET "returnDate"=$1, "delayFee"=$2 WHERE id=$3',
         [returnDate, delayFee,id])
@@ -33,7 +33,7 @@ export async function postReturnRent (req, res) {
 export async function getRentals (req, res) {
     try {
         const rentals = await connection
-        .query('SELECT rentals.* FROM rentals')
+        .query('SELECT rentals.*, customers.* FROM rentals JOIN customers ON rentals."customerId"=customers.id')
         res.send(rentals.rows)
     } catch (erro) {
         console.log(erro)

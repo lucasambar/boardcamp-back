@@ -84,7 +84,7 @@ export async function findRent (req, res, next) {
         const rent = await connection.query('SELECT * FROM rentals WHERE id=$1',[id])
         if (rent.rowCount === 0) {res.sendStatus(404); return}
 
-        if (rent.rows[0].returnDate === null) {res.status(400).send(rent.rows[0]); return}
+        if (rent.rows[0].returnDate !== null) {res.status(400).send(rent.rows[0]); return}
 
         req.id = id
         next()
