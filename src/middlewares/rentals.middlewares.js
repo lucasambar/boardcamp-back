@@ -76,3 +76,21 @@ export async function returnRent (req, res, next) {
         res.sendStatus(500)
     }
 }
+
+export async function findRent (req, res, next) {
+    const id = req.params.id
+
+    try {
+        const rent = await connection.query('SELECT * FROM rentals WHERE id=$1',[id])
+        if (rent.rowCount === 0) {res.sendStatus(404); return}
+
+        if (rent.rows[0].returnDate === null) {res.status(400).send(rent.rows[0]); return}
+
+        req.id = id
+        next()
+
+    } catch (erro) {
+        console.log(erro)
+        res.sendStatus(500)
+    }
+}

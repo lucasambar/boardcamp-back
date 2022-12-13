@@ -40,3 +40,15 @@ export async function getRentals (req, res) {
         res.sendStatus(500)
     }
 }
+
+export async function deleteRentals (req, res) {
+    const id = req.id
+
+    try {
+        await connection.query('DELETE FROM rentals WHERE id=$1',[id])
+        res.sendStatus(200)
+    } catch (erro) {
+        console.log(erro)
+        res.sendStatus(500)
+    }
+}
